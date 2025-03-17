@@ -1,0 +1,14 @@
+Package: StrangSplittingJRNMM
+Type: Package
+Title: Simulation of N stochastic Jansen-and-Rit Neural Mass Models (JRNMMs) with Strang splitting scheme
+Version: 0.1.0
+Author: Massimiliano Tamborrino
+Maintainer: <massimiliano.tamborrino@warwick.ac.uk>
+Description: Simulation of N coupled stochastic JR-NMMs with Strang splitting scheme.
+License: GPL (>= 2)
+Encoding: UTF-8
+LazyData: true
+Depends: R (>= 4.1.0), Rcpp, mvnfast
+Imports: 
+LinkingTo: Rcpp
+RoxygenNote: 7.3.2
