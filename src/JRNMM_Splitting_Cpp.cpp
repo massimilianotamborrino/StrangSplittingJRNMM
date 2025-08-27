@@ -9,8 +9,8 @@ using namespace std;
 // Description: Strang splitting method for path simulation of the stochastic
 //              multi-population JRNMM, proposed in the paper:
 //
-//              Network inference in a stochastic multi-population neural mass
-//              model, by S. Ditlevsen, M. Tamborrino and I. Tubikanec
+//             Network inference via approximate Bayesian computation.
+//             Illustration on a stochastic multi-population neural mass model, by S. Ditlevsen, M. Tamborrino, I. Tubikanec, Ann. Appl. Stat. 2025
 //------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
@@ -53,6 +53,16 @@ double sigmoid_JRNMM_Cpp_(double x, double vmax, double v0, double r)
   return ret;
 };
 
+//------------------------------------------------------------------------------
+// Diagonal entering into the block matrix of the exponential matrix of the linear SDE in the splitting scheme
+// Exponential matrix of the underlying linear SDE in the JRNMM
+//
+// Input:
+// dGamma vector of diagonal entries of the Gamma matrix
+// h step size used for path simulation
+//
+// Output: See above
+
 // [[Rcpp::export]]
 NumericMatrix exponential_matrix_JRNMM_(NumericVector dGamma, double h){
   NumericVector dGh(dGamma.size()),expdG(dGamma.size());
@@ -66,7 +76,13 @@ NumericMatrix exponential_matrix_JRNMM_(NumericVector dGamma, double h){
   return M;
 }
 
-
+//------------------------------------------------------------------------------
+// Covariance matrix of the linear SDE in the splitting scheme
+// Input:
+// dGamma vector of diagonal entries of the Gamma matrix
+// h step size used for path simulation
+// dSigma vector of diagonal entries of the Sigma matrix
+// Output: See above
 // [[Rcpp::export]]
 NumericMatrix covariance_matrix_JRNMM_(NumericVector dGamma,NumericVector dSigma, double h){
   int n=dGamma.size();
@@ -202,7 +218,6 @@ NumericMatrix JRNMM_Splitting_Cpp_(int N_i, NumericVector grid_i, double h_i, Nu
 };
 
 
-
 // [[Rcpp::export]]
 NumericVector meanHO_(int N, double h,NumericMatrix expM,NumericVector x){
   NumericVector vec(6*N);
@@ -213,7 +228,22 @@ NumericVector meanHO_(int N, double h,NumericMatrix expM,NumericVector x){
   return vec;
 }
 
+//------------------------------------------------------------------------------
+// Faster code to simulate all components of a stochastic N-population JRNMM taking
+// advantage of block-matrix decomposition
 
+// Input:
+// N        number of populations in the JRNMM
+// grid     time grid for path simulation
+// h        step size for path simulation
+// startv   starting value X0 for path simulation
+// dGamma   vector of diagonal entries of the Gamma matrix
+// dSigma   vector of diagonal entries of the Sigma matrix
+// Theta    matrix containing continuous model parameters of the JRNMM
+// Rho      matrix containing the coupling direction parameters of the JRNMM
+// K        matrix containing the coupling strength parameters of the JRNMM
+//
+// Output:  path of the stochastic N-population JRNMM
 // [[Rcpp::export]]
 NumericMatrix fastJRNMM_Splitting_Cpp_(int N, NumericVector grid, double h, NumericVector start, NumericVector dGamma,NumericVector dSigma, NumericMatrix Theta, NumericMatrix Rho, NumericMatrix K)
 {
@@ -243,4 +273,23 @@ NumericMatrix fastJRNMM_Splitting_Cpp_(int N, NumericVector grid, double h, Nume
   return sol;
 };
 
+//------------------------------------------------------------------------------
+// Function returning the observed components from a system of N populations of JRNMMs.
+// Input:
+// N    number of populations in the JRNMM
+// sol  paths of the 6N coordinates of the N populations JRNMMs
+// Output:
+// N observed paths from the system
 
+// [[Rcpp::export]]
+NumericMatrix observedJRNMM_(int N, NumericMatrix sol)
+{
+  int iter=sol.cols();
+  NumericMatrix Y(N,iter);
+  int index_l, index_r;
+  for(int j=0;j<N;j++){
+    index_l=3*j+1;
+    index_r=3*j+2;
+    Y(j,_)=sol(index_l,_)-sol(index_r,_);
+  }
+  return(Y);}

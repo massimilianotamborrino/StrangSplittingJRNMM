@@ -16,7 +16,7 @@ NULL
 #'@param Theta  vector of continuous parameters
 #'@param Rho matrix of {0,1} discrete parameters
 #'@param K Matrix of strength parameters
-#'#'@return path of the stochastic N-population JRNMM
+#'@return path of the stochastic N-population JRNMM
 #'@export
 JRNMM_Splitting <- function(N, grid, h, startv, dm, meanVec, covMat, Theta, Rho, K){
   return(JRNMM_Splitting_Cpp_(N, grid, h, startv, dm, meanVec, covMat, Theta, Rho, K))
@@ -35,12 +35,30 @@ JRNMM_Splitting <- function(N, grid, h, startv, dm, meanVec, covMat, Theta, Rho,
 #'@param Theta  vector of continuous parameters
 #'@param Rho matrix of {0,1} discrete parameters
 #'@param K Matrix of strength parameters
-#'#'@return path of the stochastic N-population JRNMM
+#'@return path of the stochastic N-population JRNMM
 #'@export
 fast_JRNMM_Splitting <- function(N, grid, h, startv, dGamma,dSigma, Theta, Rho, K){
   return(fastJRNMM_Splitting_Cpp_(N, grid, h, startv, dGamma,dSigma, Theta, Rho, K))
 }
 
+#'@rdname observedJRNMM
+#'@title observedJRNMM
+#'@description Strang splitting method for path simulation of the observed components of the
+#' stochastic multi-population JRNMM.
+#'@param N number of populations of neurons
+#'@param grid time points at which to simulate the process
+#'@param h step size used for path simulation
+#'@param startv starting point x0
+#'@param dGamma vector of diagonal entries of the Gamma matrix
+#'@param dSigma vector of diagonal entries of the Sigma matrix
+#'@param Theta  vector of continuous parameters
+#'@param Rho matrix of {0,1} discrete parameters
+#'@param K Matrix of strength parameters
+#'@return observed components of the stochastic N-population JRNMM
+observedJRNMM <- function(N, grid, h, startv, dGamma,dSigma, Theta, Rho, K){
+  Y<-fast_JRNMM_Splitting(N, grid, h, startv, dGamma,dSigma, Theta, Rho, K)
+  return(observedJRNMM_(N, Y))
+}
 
 #'@rdname exponential_matrix_JRNMM
 #'@title exponential_matrix_JRNMM
@@ -48,7 +66,7 @@ fast_JRNMM_Splitting <- function(N, grid, h, startv, dGamma,dSigma, Theta, Rho, 
 # the exponential matrix of the linear SDE in the splitting scheme
 #'@param dGamma vector of diagonal entries of the Gamma matrix
 #'@param h step size used for path simulation
-#'@return path of the stochastic N-population JRNMM
+#'@return See description
 #'@export
 exponential_matrix_JRNMM <- function(dGamma, h){
   return(exponential_matrix_JRNMM_(dGamma, h))
@@ -60,7 +78,7 @@ exponential_matrix_JRNMM <- function(dGamma, h){
 #'@param dGamma vector of diagonal entries of the Gamma matrix
 #'@param h step size used for path simulation
 #'@param dSigma vector of diagonal entries of the Sigma matrix
-#'@return path of the stochastic N-population JRNMM
+#'@return See description
 #'@export
 covariance_matrix_JRNMM <- function(dGamma,dSigma, h){
   return(covariance_matrix_JRNMM_(dGamma,dSigma, h))
@@ -72,7 +90,7 @@ covariance_matrix_JRNMM <- function(dGamma,dSigma, h){
 #'@description Matrix-Vector Multiplication
 #'@param mat matrix
 #'@param vet vector
-#'@return path of the stochastic N-population JRNMM
+#'@return See description
 #'@export
 mv_mult_JRNMM <- function(mat,vet){
   return(mv_mult_JRNMM_(mat,vet))
@@ -85,7 +103,7 @@ mv_mult_JRNMM <- function(mat,vet){
 #'@param vmax value of the JRNMM
 #'@param v0  value of the JRNMM
 #'@param r value of the JRNMM
-#'@return path of the stochastic N-population JRNMM
+#'@return See description
 #'@export
 sigmoid_JRNMM <- function(x,vmax,v0,r){
   return(sigmoid_JRNMM_Cpp_(x,vmax,v0,r))
@@ -98,7 +116,7 @@ sigmoid_JRNMM <- function(x,vmax,v0,r){
 #'@param vec vector coming from the non-linear ODE from the Strang splitting scheme
 #'@param dm exponential matrix coming from the linear SDE in the splitting scheme
 #'@param xi gaussian increments
-#'@return path of the stochastic N-population JRNMM
+#'@return See description
 #'@export
 linear_JRNMM <- function(vec,dm,xi){
   return(linear_JRNMM_Cpp_(vec,dm,xi))
@@ -114,7 +132,7 @@ linear_JRNMM <- function(vec,dm,xi){
 #'@param Theta  vector of continuous parameters
 #'@param Rho matrix of {0,1} discrete parameters
 #'@param K Matrix of strength parameters
-#'@return path of the stochastic N-population JRNMM
+#'@return See description
 #'@export
 nonlinear_JRNMM <- function(N,vec,h,Theta,Rho,K){
   return(nonlinear_JRNMM_Cpp_(N,vec,h,Theta,Rho,K))
