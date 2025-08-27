@@ -138,3 +138,15 @@ linear_JRNMM <- function(vec,dm,xi){
 nonlinear_JRNMM <- function(N,vec,h,Theta,Rho,K){
   return(nonlinear_JRNMM_Cpp_(N,vec,h,Theta,Rho,K))
 }
+
+#'@rdname KmatrixgivenLc
+#'@title KmatrixgivenLc
+#'@description Code to calculate the K matrix given L and c
+#'@param N number of populations of neurons
+#'@param L strength parameter
+#'@param c [0,1] parameter
+#'@return Kmatrix given L and c
+#'@export
+KmatrixgivenLc <- function(N,L,c){
+  return(KmatrixgivenLc_(N,L,c))
+}
