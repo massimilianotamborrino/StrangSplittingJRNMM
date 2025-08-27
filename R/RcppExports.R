@@ -41,3 +41,7 @@ observedJRNMM_ <- function(N, sol) {
     .Call(`_StrangSplittingJRNMM_observedJRNMM_`, N, sol)
 }
 
+KmatrixgivenLc_ <- function(N, L, c) {
+    .Call(`_StrangSplittingJRNMM_KmatrixgivenLc_`, N, L, c)
+}
+

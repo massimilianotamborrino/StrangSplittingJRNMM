@@ -155,6 +155,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// KmatrixgivenLc_
+NumericMatrix KmatrixgivenLc_(int N, double L, double c);
+RcppExport SEXP _StrangSplittingJRNMM_KmatrixgivenLc_(SEXP NSEXP, SEXP LSEXP, SEXP cSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type N(NSEXP);
+    Rcpp::traits::input_parameter< double >::type L(LSEXP);
+    Rcpp::traits::input_parameter< double >::type c(cSEXP);
+    rcpp_result_gen = Rcpp::wrap(KmatrixgivenLc_(N, L, c));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_StrangSplittingJRNMM_mv_mult_JRNMM_", (DL_FUNC) &_StrangSplittingJRNMM_mv_mult_JRNMM_, 2},
@@ -167,6 +180,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_StrangSplittingJRNMM_meanHO_", (DL_FUNC) &_StrangSplittingJRNMM_meanHO_, 4},
     {"_StrangSplittingJRNMM_fastJRNMM_Splitting_Cpp_", (DL_FUNC) &_StrangSplittingJRNMM_fastJRNMM_Splitting_Cpp_, 9},
     {"_StrangSplittingJRNMM_observedJRNMM_", (DL_FUNC) &_StrangSplittingJRNMM_observedJRNMM_, 2},
+    {"_StrangSplittingJRNMM_KmatrixgivenLc_", (DL_FUNC) &_StrangSplittingJRNMM_KmatrixgivenLc_, 3},
     {NULL, NULL, 0}
 };
 
