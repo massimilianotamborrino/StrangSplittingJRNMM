@@ -55,6 +55,7 @@ fast_JRNMM_Splitting <- function(N, grid, h, startv, dGamma,dSigma, Theta, Rho, 
 #'@param Rho matrix of {0,1} discrete parameters
 #'@param K Matrix of strength parameters
 #'@return observed components of the stochastic N-population JRNMM
+#'@export
 observedJRNMM <- function(N, grid, h, startv, dGamma,dSigma, Theta, Rho, K){
   Y<-fast_JRNMM_Splitting(N, grid, h, startv, dGamma,dSigma, Theta, Rho, K)
   return(observedJRNMM_(N, Y))
