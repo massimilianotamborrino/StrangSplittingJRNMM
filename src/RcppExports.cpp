@@ -143,6 +143,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// observedJRNMM_
+NumericMatrix observedJRNMM_(int N, NumericMatrix sol);
+RcppExport SEXP _StrangSplittingJRNMM_observedJRNMM_(SEXP NSEXP, SEXP solSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type N(NSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type sol(solSEXP);
+    rcpp_result_gen = Rcpp::wrap(observedJRNMM_(N, sol));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_StrangSplittingJRNMM_mv_mult_JRNMM_", (DL_FUNC) &_StrangSplittingJRNMM_mv_mult_JRNMM_, 2},
@@ -154,6 +166,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_StrangSplittingJRNMM_JRNMM_Splitting_Cpp_", (DL_FUNC) &_StrangSplittingJRNMM_JRNMM_Splitting_Cpp_, 10},
     {"_StrangSplittingJRNMM_meanHO_", (DL_FUNC) &_StrangSplittingJRNMM_meanHO_, 4},
     {"_StrangSplittingJRNMM_fastJRNMM_Splitting_Cpp_", (DL_FUNC) &_StrangSplittingJRNMM_fastJRNMM_Splitting_Cpp_, 9},
+    {"_StrangSplittingJRNMM_observedJRNMM_", (DL_FUNC) &_StrangSplittingJRNMM_observedJRNMM_, 2},
     {NULL, NULL, 0}
 };
 

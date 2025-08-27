@@ -1,7 +1,7 @@
 # StrangSplittingJRNMM
 
 R package for the Strang numerical splitting scheme of N populations of the Jansen-and-Rit neural mass models (JRNMM) proposed in Algorithm 2 in 
-[1] S. Ditlevsen, M. Tamborrino, I. Tubikanec. Network Inference via Approximate Bayesian Computation. Illustration on a stochastic multi-population Neural Mass Model. Preprint at ArXiv: 2306.15787v2 https://arxiv.org/abs/2306.15787 
+[1] S. Ditlevsen, M. Tamborrino, I. Tubikanec. Network Inference via Approximate Bayesian Computation. Illustration on a stochastic multi-population Neural Mass Model. Preprint at ArXiv: 2306.15787 https://arxiv.org/abs/2306.15787 
 
 The R-package is written and maintained by Massimiliano Tamborrino (firstname dot secondname at warwick.ac.uk).
 
@@ -12,9 +12,15 @@ The main routine is "fast_JRNMM_Splitting.R", which simulates trajectories of $X
 
 The "JRNMM_Splitting" routine has the same inputs as "fast_JRNMM_Splitting.R" with the only difference of passing the entire diagonal matrices Gamma and Sigma instead of only the diagonal entries. This routine is not taking advantage of the fact that these matrices are diagonal, leading to higher runtimes. This routine is left here for illustration purposes, but the use of "fast_JRNMM_Splitting.R" is recommended.
 
+While the "fast_JRNMM_Splitting.R" routine returns simulated path from all 6N components from the N populations of the JRNMM, the routine "observedJRNMM" returns only the observed components, i.e. $Y(t)=(Y^1(t),\ldots, Y^N(t))^T=(X_2^1(t)-X_3^1(t),\ldots,X_2^N(t)-X_3^N(t))^T$, so this code should be used if one cares only on the observed components.  
+
 # How to install the package
 * Tools/Install packages/ select the source folder
 *To update The simplest way is to do it via devtools, using devtools::install_github("massimilianotamborrino/StrangSplittingJRNMM")
 
 # Output of "fast_JRNMM_Splitting.R" and "JRNMM_Splitting.R"
-Both routines return a 6NxM matrix, where the number of rows, 6N, corresponds to the 6N components of the N JRNMM populations, with M being the number of discrete-time points where the trajectories are evaluated, e.g., using equidistant points in $[0,T]$, we will have $t_i=ih, i=0,\ldots, M, M=T/h+1$. Remember that the first 3N components (rows) corresponds to $Q$ and the second 3N to $P$. For inference purposes, the available observations are $Y(t)=(Y^1(t),\ldots, Y^N(t))^T=(X_2^1(t)-X_3^1(t),\ldots,X_2^N(t)-X_3^N(t))^T$ which can be immediately determined from the first 3N components of the output $X(t)$.
+Both routines return a 6NxM matrix, where the number of rows, 6N, corresponds to the 6N components of the N JRNMM populations, with M being the number of discrete-time points where the trajectories are evaluated, e.g., using equidistant points in $[0,T]$, we will have $t_i=ih, i=0,\ldots, M, M=T/h+1$. Remember that the first 3N components (rows) corresponds to $Q$ and the second 3N to $P$. For inference purposes, the available observations are $Y(t)=(Y^1(t),\ldots, Y^N(t))^T=(X_2^1(t)-X_3^1(t),\ldots,X_2^N(t)-X_3^N(t))^T$ which can be immediately determined from the first 3N components of the output $X(t)$ using the "observedJRNMM.R" routine, see below.
+
+# Output of "observedJRNMM.R" 
+This routine returns a NxM matrix, where the number of rows, N, corresponds to the observed components of the N JRNMM populations, with M being the number of discrete-time points where the trajectories are evaluated, e.g., using equidistant points in $[0,T]$, we will have $t_i=ih, i=0,\ldots, M, M=T/h+1$. The observed components are obtained as $Y(t)=(Y^1(t),\ldots, Y^N(t))^T=(X_2^1(t)-X_3^1(t),\ldots,X_2^N(t)-X_3^N(t))^T$, where $X(t)$ is the 6NxM output obtained from either the "fast_JRNMM_Splitting.R" or the "JRNMM_Splitting.R routines.
+
