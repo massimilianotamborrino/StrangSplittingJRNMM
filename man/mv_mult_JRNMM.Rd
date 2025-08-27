@@ -12,7 +12,7 @@ mv_mult_JRNMM(mat, vet)
 \item{vet}{vector}
 }
 \value{
-path of the stochastic N-population JRNMM
+See description
 }
 \description{
 Matrix-Vector Multiplication

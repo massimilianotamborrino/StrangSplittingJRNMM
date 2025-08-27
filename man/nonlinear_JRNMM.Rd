@@ -20,7 +20,7 @@ nonlinear_JRNMM(N, vec, h, Theta, Rho, K)
 \item{K}{Matrix of strength parameters}
 }
 \value{
-path of the stochastic N-population JRNMM
+See description
 }
 \description{
 nonlinear ODE: exact solution of 2nd subequation of splitting procedure for the JRNMM

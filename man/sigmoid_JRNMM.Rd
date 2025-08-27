@@ -16,7 +16,7 @@ sigmoid_JRNMM(x, vmax, v0, r)
 \item{r}{value of the JRNMM}
 }
 \value{
-path of the stochastic N-population JRNMM
+See description
 }
 \description{
 Sigmoid function of the JRNMM

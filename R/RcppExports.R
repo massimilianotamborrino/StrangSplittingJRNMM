@@ -37,3 +37,7 @@ fastJRNMM_Splitting_Cpp_ <- function(N, grid, h, start, dGamma, dSigma, Theta, R
     .Call(`_StrangSplittingJRNMM_fastJRNMM_Splitting_Cpp_`, N, grid, h, start, dGamma, dSigma, Theta, Rho, K)
 }
 
+observedJRNMM_ <- function(N, sol) {
+    .Call(`_StrangSplittingJRNMM_observedJRNMM_`, N, sol)
+}
+

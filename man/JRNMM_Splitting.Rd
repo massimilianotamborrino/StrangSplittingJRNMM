@@ -25,8 +25,10 @@ JRNMM_Splitting(N, grid, h, startv, dm, meanVec, covMat, Theta, Rho, K)
 
 \item{Rho}{matrix of {0,1} discrete parameters}
 
-\item{K}{Matrix of strength parameters
-#'@return path of the stochastic N-population JRNMM}
+\item{K}{Matrix of strength parameters}
+}
+\value{
+path of the stochastic N-population JRNMM
 }
 \description{
 Strang splitting method for path simulation of the

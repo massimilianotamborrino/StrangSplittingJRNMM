@@ -14,7 +14,7 @@ covariance_matrix_JRNMM(dGamma, dSigma, h)
 \item{h}{step size used for path simulation}
 }
 \value{
-path of the stochastic N-population JRNMM
+See description
 }
 \description{
 Covariance matrix of the linear SDE in the splitting scheme

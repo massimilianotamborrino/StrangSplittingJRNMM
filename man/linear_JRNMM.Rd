@@ -14,7 +14,7 @@ linear_JRNMM(vec, dm, xi)
 \item{xi}{gaussian increments}
 }
 \value{
-path of the stochastic N-population JRNMM
+See description
 }
 \description{
 linear SDE: exact solution of 1st subequation of splitting procedure for the JRNMM
